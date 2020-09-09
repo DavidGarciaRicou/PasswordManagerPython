@@ -73,9 +73,14 @@ if userpwd==password and userlog==username:
                         platcheck=datatoread[x]
                         plattochk=platcheck[0]
                         if pltoread==plattochk:
-                            print("This is your Username: "+platcheck[1]+", and password: "+platcheck[1]+", from the platform: "+platcheck[0])
-                        else:
-                            print("The paltform you're searching for is not in the database, please, try again.")       
+                            print("Platform: ",platcheck[0])
+                            print("Username: ",platcheck[1])
+                            print("Password: ",platcheck[2])
+                            print("=======================")
+                            c=True
+                            break
+                    if c!=True:
+                        print("Platform not found on the database, check for (all)")
                 n="0"
             check=False
     
