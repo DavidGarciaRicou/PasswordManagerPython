@@ -1,4 +1,5 @@
 import getpass as gp
+import base64 as b6
 import csv,sys
 username="root"
 password="root"
@@ -44,6 +45,8 @@ if userpwd==password and userlog==username:
                 fo.close
                 newline.append(input("Introduce username: "))
                 newline.append(gp.getpass("Introduce password: "))
+                for x in range(1,len(newline)):
+                    newline[x]=(b6.b64encode(str.encode(newline[x])))
                 datatoread=list(data)
                 fo=open(reqfile,'a',newline="") #Open file as append
                 data=csv.writer(fo) #data=write data with csv into fo
@@ -60,22 +63,24 @@ if userpwd==password and userlog==username:
                 fo=open(reqfile,'r',newline="") #r to read; newline="" to prevent empty lines
                 data=csv.reader(fo)
                 datatoread=list(data)
+                platcheck=[]
+                aux=[]
                 if pltoread=="all":
                     for x in range(1,len(datatoread)):
                         platcheck=datatoread[x]
                         print("Platform: ",platcheck[0])
-                        print("Username: ",platcheck[1])
-                        print("Password: ",platcheck[2])
+                        print("Username: ",(b6.b64decode((platcheck[1])[2:-1:])).decode("utf-8"))
+                        print("Password: ",(b6.b64decode((platcheck[2])[2:-1:])).decode("utf-8"))
                         print("=======================")
-                        check=True
+                    check=True
                 elif pltoread!="all":
                     for x in range(len(datatoread)):
                         platcheck=datatoread[x]
                         plattochk=platcheck[0]
                         if pltoread==plattochk:
                             print("Platform: ",platcheck[0])
-                            print("Username: ",platcheck[1])
-                            print("Password: ",platcheck[2])
+                            print("Username: ",(b6.b64decode((platcheck[1])[2:-1:])))
+                            print("Password: ",(b6.b64decode((platcheck[2])[2:-1:])))
                             print("=======================")
                             c=True
                             break
@@ -83,4 +88,3 @@ if userpwd==password and userlog==username:
                         print("Platform not found on the database, check for (all)")
                 n="0"
             check=False
-    
